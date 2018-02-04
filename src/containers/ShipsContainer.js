@@ -6,7 +6,17 @@ import Ships from '../components/Ships';
 
 class ShipsContainer extends React.Component {
   render() {
-    return <Ships clickHandler={this.props.selectShip} />
+    const {
+      playerShips,
+      selectShip, 
+    } = this.props;
+
+    return (
+      <Ships
+        clickHandler={selectShip}
+        playerShips={playerShips}
+      />
+    );
   }
 };
 

@@ -18,16 +18,19 @@ export default class Ships extends React.Component {
   };
 
   render() {
+    const { playerShips } = this.props;
+
     return (
       <div>
         {this.ships.map(ship => {
           return (
             <button
-            key={ship.name}
-            onClick={this.handleClick}
-            value={ship.name}
+              disabled={Object.keys(playerShips).includes(ship.name)}
+              key={ship.name}
+              onClick={this.handleClick}
+              value={ship.name}
             >
-            {`${ship.name} (${ship.length})`}
+              {`${ship.name} (${ship.length})`}
             </button>
           )
         })}

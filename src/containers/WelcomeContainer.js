@@ -6,18 +6,9 @@ import Welcome from '../components/Welcome';
 
 class WelcomeContainer extends React.Component {
   render() {
-    const { playerOneName, playerTwoName } = this.props;
-
     return (
       <Welcome submitHandler={this.props.setPlayerNames} />
     )
-  }
-};
-
-const mapStateToProps = (state) => {
-  return {
-    playerOneName: state.playerOneName,
-    playerTwoName: state.playerTwoName,
   }
 };
 
@@ -27,4 +18,4 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WelcomeContainer);
+export default connect(null, mapDispatchToProps)(WelcomeContainer);

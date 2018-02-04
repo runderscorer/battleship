@@ -27,6 +27,8 @@ const boardReducer = (state = {
       return {
         ...state,
         [action.payload.player]: playerShips(state[action.payload.player], action),
+        shipSelected: '',
+        shipLength: '',
       };
     default:
       return state;
@@ -37,20 +39,28 @@ const playerShips = (state, action) => {
   switch (action.type) {
     case 'SET_SHIP':
       return {...state, [action.payload.shipName]: action.payload.coordinates};
+    default:
+      return state;
   }
 };
 
 const gameReducer = (state = {
   activeGame: false,
-  playerOneName: '',
-  playerTwoName: '',
+  playerOne: '',
+  playerTwo: '',
+  playerTurn: 'playerOne',
 }, action) => {
   switch (action.type) {
     case 'SET_PLAYER_NAMES':
       return {
         ...state,
-        playerOneName: action.payload.playerOne,
-        playerTwoName: action.payload.playerTwo,
+        playerOne: action.payload.playerOne,
+        playerTwo: action.payload.playerTwo,
+      };
+    case 'TOGGLE_TURN':
+      return {
+        ...state,
+        playerTurn: action.payload,
       };
     default:
       return state;

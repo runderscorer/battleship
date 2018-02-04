@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import App from '../components/App';
-import { Route } from 'react-router';
-import BoardContainer from '../containers/BoardContainer';
+import { Route, withRouter } from 'react-router';
 import GameContainer from '../containers/GameContainer';
+import SetUpContainer from '../containers/SetUpContainer';
 import WelcomeContainer from '../containers/WelcomeContainer';
 
 class AppContainer extends React.Component {
@@ -11,8 +10,9 @@ class AppContainer extends React.Component {
     return (
       <div>
         <Route exact path='/' component={WelcomeContainer} />
-        <Route exact path='/player-one' component={GameContainer} />
-        <Route exact path='/player-two' component={GameContainer} />
+        <Route exact path='/player-one' component={SetUpContainer} />
+        <Route exact path='/player-two' component={SetUpContainer} />
+        <Route exact path='/start' component={GameContainer} />
       </div>
     )
   }
@@ -24,4 +24,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-export default connect(mapStateToProps)(AppContainer);
+export default withRouter(connect(mapStateToProps)(AppContainer));
