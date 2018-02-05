@@ -1,12 +1,20 @@
 import { push } from 'react-router-redux';
 
+export function playerOneAttack(coordinates) {
+  return { type: 'PLAYER_ONE_ATTACK', payload: coordinates };
+};
+
+export function playerTwoAttack(coordinates) {
+  return { type: 'PLAYER_TWO_ATTACK', payload: coordinates };
+};
+
 export function navigateNext(pathname) {
   return (dispatch) => {
     switch (pathname) {
       case '/player-one':
         return dispatch(push('/player-two'));
       case '/player-two':
-        return dispatch(push('/start'));
+        return dispatch(push('/ready/player-one'));
       default:
         return;
     }
@@ -46,5 +54,16 @@ export function setOrientation(orientation) {
 };
 
 export function toggleTurn(player) {
-  return { type: 'TOGGLE_TURN', payload: player };
+  const pathname = player === 'playerOne' ? '/ready/player-one' : '/ready/player-two';
+  return (dispatch) => {
+    dispatch({
+      type: 'TOGGLE_TURN',
+      payload: player
+    });
+    dispatch(push(pathname));
+  };
+};
+
+export function updateMessage(message) {
+  return { type: 'UDPATE_MESSAGE', payload: message };
 };

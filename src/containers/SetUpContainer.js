@@ -152,7 +152,7 @@ const mapStateToProps = (state) => {
     pathname,
     player,
     orientation: state.board.orientation,
-    playerName: state.game[player],
+    playerName: state.game[`${player}Name`],
     playerShips: state.board[player],
     shipLength: state.board.shipLength,
     shipSelected: state.board.shipSelected,

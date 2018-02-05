@@ -46,21 +46,46 @@ const playerShips = (state, action) => {
 
 const gameReducer = (state = {
   activeGame: false,
-  playerOne: '',
-  playerTwo: '',
+  message: '',
+  playerOneName: '',
+  playerOne: [],
+  playerTwoName: '',
+  playerTwo: [],
   playerTurn: 'playerOne',
 }, action) => {
   switch (action.type) {
+    case 'PLAYER_ONE_ATTACK':
+      return {
+        ...state,
+        playerOne: [
+          ...state.playerOne,
+          action.payload
+        ]
+      };
+    case 'PLAYER_TWO_ATTACK':
+      return {
+        ...state,
+        playerTwo: [
+          ...state.playerTwo,
+          action.payload
+        ]
+      };
     case 'SET_PLAYER_NAMES':
       return {
         ...state,
-        playerOne: action.payload.playerOne,
-        playerTwo: action.payload.playerTwo,
+        playerOneName: action.payload.playerOne,
+        playerTwoName: action.payload.playerTwo,
       };
     case 'TOGGLE_TURN':
       return {
         ...state,
+        message: '',
         playerTurn: action.payload,
+      };
+    case 'UPDATE_MESSAGE':
+      return {
+        ...state,
+        message: action.payload,
       };
     default:
       return state;
