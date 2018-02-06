@@ -1,6 +1,16 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { SHIP_LENGTHS } from '../constants';
+import {
+  PLAYER_ONE_ATTACK,
+  PLAYER_TWO_ATTACK,
+  SELECT_SHIP,
+  SET_ORIENTATION,
+  SET_PLAYER_NAMES,
+  SET_SHIP,
+  TOGGLE_TURN,
+  UPDATE_MESSAGE,
+} from '../actionTypes';
 
 const boardReducer = (state = {
   orientation: '',
@@ -12,18 +22,18 @@ const boardReducer = (state = {
   shipLength: '',
 }, action) => {
   switch (action.type) {
-    case 'SET_ORIENTATION':
+    case SET_ORIENTATION:
       return {
         ...state,
         orientation: action.payload
       };
-    case 'SELECT_SHIP':
+    case SELECT_SHIP:
       return {
         ...state,
         shipSelected: action.payload,
         shipLength: SHIP_LENGTHS[action.payload],
       };
-    case 'SET_SHIP':
+    case SET_SHIP:
       return {
         ...state,
         [action.payload.player]: playerShips(state[action.payload.player], action),
@@ -37,7 +47,7 @@ const boardReducer = (state = {
 
 const playerShips = (state, action) => {
   switch (action.type) {
-    case 'SET_SHIP':
+    case SET_SHIP:
       return {...state, [action.payload.coordinates]: action.payload.shipName};
     default:
       return state;
@@ -54,7 +64,7 @@ const gameReducer = (state = {
   playerTurn: 'playerOne',
 }, action) => {
   switch (action.type) {
-    case 'PLAYER_ONE_ATTACK':
+    case PLAYER_ONE_ATTACK:
       return {
         ...state,
         playerOne: [
@@ -62,7 +72,7 @@ const gameReducer = (state = {
           action.payload
         ]
       };
-    case 'PLAYER_TWO_ATTACK':
+    case PLAYER_TWO_ATTACK:
       return {
         ...state,
         playerTwo: [
@@ -70,22 +80,21 @@ const gameReducer = (state = {
           action.payload
         ]
       };
-    case 'SET_PLAYER_NAMES':
+    case SET_PLAYER_NAMES:
       return {
         ...state,
         playerOneName: action.payload.playerOne,
-        playerTwoName: action.payload.playerTwo,
+        playerTwoName: action.payload.playerTwo
       };
-    case 'TOGGLE_TURN':
+    case TOGGLE_TURN:
       return {
         ...state,
-        message: '',
-        playerTurn: action.payload,
+        playerTurn: action.payload
       };
-    case 'UPDATE_MESSAGE':
+    case UPDATE_MESSAGE:
       return {
         ...state,
-        message: action.payload,
+        message: action.payload
       };
     default:
       return state;
