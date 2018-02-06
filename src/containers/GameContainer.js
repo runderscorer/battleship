@@ -101,10 +101,12 @@ class GameContainer extends React.Component {
   render() {
     const {
       board,
+      playerName,
     } = this.props;
 
     return (
       <div>
+        <h1>{playerName}</h1>
         <Board
           board={board}
           clickHandler={this.clickHandler}
