@@ -1,3 +1,4 @@
+export const ATTACK_SHIP = 'ATTACK_SHIP';
 export const PLAYER_ONE_ATTACK = 'PLAYER_ONE_ATTACK';
 export const PLAYER_TWO_ATTACK = 'PLAYER_TWO_ATTACK';
 export const SELECT_SHIP = 'SELECT_SHIP';

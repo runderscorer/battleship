@@ -5,7 +5,6 @@ import {
   navigateNext,
   setShip,
 } from '../actions';
-import { matchingCoordinates } from '../helpers';
 import Board from '../components/Board';
 import Button from '../components/Button';
 import OptionsContainer from './OptionsContainer';
@@ -18,8 +17,8 @@ class SetUpContainer extends React.Component {
 
     // Mark player ships on the board
     Object.keys(playerShips).forEach(shipCoordinates => {
-      let coordinatesStr = shipCoordinates.split(',');
-      table.rows[coordinatesStr[0]].cells[coordinatesStr[1]].classList.add('marker');
+      let coordinatesArr = shipCoordinates.split(',');
+      table.rows[coordinatesArr[0]].cells[coordinatesArr[1]].classList.add('marker');
     });
   };
 

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { SHIP_LENGTHS } from '../constants';
 import {
+  ATTACK_SHIP,
   PLAYER_ONE_ATTACK,
   PLAYER_TWO_ATTACK,
   SET_IS_PLAYING,
@@ -37,7 +38,7 @@ const boardReducer = (state = {
     case SET_SHIP:
       return {
         ...state,
-        [action.payload.player]: playerShips(state[action.payload.player], action),
+        [action.payload.player]: setShipsCoordinates(state[action.payload.player], action),
         shipSelected: '',
         shipLength: '',
       };
@@ -46,7 +47,7 @@ const boardReducer = (state = {
   }
 };
 
-const playerShips = (state, action) => {
+const setShipsCoordinates = (state, action) => {
   switch (action.type) {
     case SET_SHIP:
       return {...state, [action.payload.coordinates]: action.payload.shipName};
@@ -107,8 +108,48 @@ const gameReducer = (state = {
   }
 };
 
+const shipsReducer = (state = {
+  playerOne: {
+    'Aircraft Carrier': 5,
+    'Battleship': 4,
+    'Destroyer': 3,
+    'Submarine': 3,
+    'Patrol Boat': 2,
+  },
+  playerTwo: {
+    'Aircraft Carrier': 5,
+    'Battleship': 4,
+    'Destroyer': 3,
+    'Submarine': 3,
+    'Patrol Boat': 2,
+  },
+}, action) => {
+  switch (action.type) {
+    case ATTACK_SHIP:
+      return {
+        ...state,
+        [action.payload.enemy]: updateEnemyShip(state[action.payload.enemy], action)
+      };
+    default:
+      return state;
+  }
+};
+
+const updateEnemyShip = (state, action) => {
+  switch (action.type) {
+    case ATTACK_SHIP:
+      return {
+        ...state,
+        [action.payload.enemyShip]: state[action.payload.enemyShip] -= 1
+      };
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   board: boardReducer,
   game: gameReducer,
+  ships: shipsReducer,
   router: routerReducer,
 });

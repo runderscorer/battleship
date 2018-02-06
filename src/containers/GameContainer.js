@@ -2,28 +2,26 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
+  attackShip,
   playerOneAttack,
   playerTwoAttack,
   toggleTurn,
   updateMessage,
 } from '../actions';
-import {
-  matchingCoordinates,
-  togglePlayer
-} from '../helpers';
+import { togglePlayer } from '../helpers';
 import Board from '../components/Board';
 import Button from '../components/Button';
 
 class GameContainer extends React.Component {
   componentDidMount() {
-    this.updateBoard(this.props.enemyShips, this.props.attacks);
+    this.displayHitsAndMisses(this.props.enemyShips, this.props.attacks);
   }
 
   componentDidUpdate() {
-    this.updateBoard(this.props.enemyShips, this.props.attacks);
+    this.displayHitsAndMisses(this.props.enemyShips, this.props.attacks);
   };
 
-  updateBoard = (enemyShips, attacks) => {
+  displayHitsAndMisses = (enemyShips, attacks) => {
     const table = document.getElementsByTagName('table')[0];
 
     attacks.forEach(attack => {
@@ -45,8 +43,11 @@ class GameContainer extends React.Component {
 
   clickHandler = (e) => {
     const {
+      attackShip,
       enemyShips,
+      enemyShipsHealth,
       isPlaying,
+      playerAttacks,
       playerTurn,
       playerOneAttack,
       playerTwoAttack,
@@ -54,18 +55,25 @@ class GameContainer extends React.Component {
     } = this.props;
 
     if (!isPlaying) { return };
-    
+
     const row = e.target.parentNode.rowIndex;
     const col = e.target.cellIndex;
     const attackCoordinates = `${row},${col}`;
     const playerAttackAction = playerTurn === 'playerOne' ? playerOneAttack : playerTwoAttack;
-    const message =
-      Object.keys(enemyShips).includes(attackCoordinates) ?
-        `You hit their ${enemyShips[attackCoordinates]}!` :
-        `You missed.`
+    const enemy = togglePlayer(playerTurn);
+    console.log('enemy: ', enemy);
 
-    updateMessage(message);
     playerAttackAction(attackCoordinates);
+
+    if (Object.keys(enemyShips).includes(attackCoordinates) && !playerAttacks.includes(attackCoordinates)) {
+      const enemyShip = enemyShips[attackCoordinates];
+      attackShip(enemy, enemyShip);
+      const message = enemyShipsHealth[enemyShip] === 0 ? `You sunk their ${enemyShip}!` : `You hit their ${enemyShip}!`;
+
+      updateMessage(message);
+    } else {
+      updateMessage('You missed.');
+    };
   };
 
   mouseOverHandler = (e) => {
@@ -98,13 +106,18 @@ const mapStateToProps = (state) => {
     attacks: state.game[playerTurn],
     board: state.board.board,
     enemyShips: state.board[enemy],
+    enemyShipsHealth: state.ships[enemy],
     isPlaying: state.game.isPlaying,
-    playerTurn: state.game.playerTurn,
+    message: state.game.message,
+    playerName: state.game[`${playerTurn}Name`],
+    playerTurn,
+    playerAttacks: state.game[playerTurn],
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    attackShip,
     playerOneAttack,
     playerTwoAttack,
     toggleTurn,

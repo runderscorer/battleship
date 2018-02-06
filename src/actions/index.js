@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux';
 import {
+  ATTACK_SHIP,
   PLAYER_ONE_ATTACK,
   PLAYER_TWO_ATTACK,
   SELECT_SHIP,
@@ -10,6 +11,16 @@ import {
   TOGGLE_TURN,
   UPDATE_MESSAGE,
 } from '../actionTypes';
+
+export function attackShip(enemy, enemyShip) {
+  return {
+    type: ATTACK_SHIP,
+    payload: {
+      enemy,
+      enemyShip
+    }
+  };
+};
 
 export function setIsPlaying(isPlaying) {
   return { type: SET_IS_PLAYING, payload: isPlaying };
