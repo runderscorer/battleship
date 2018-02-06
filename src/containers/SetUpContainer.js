@@ -5,6 +5,7 @@ import {
   navigateNext,
   setShip,
 } from '../actions';
+import { matchingCoordinates } from '../helpers';
 import Board from '../components/Board';
 import Button from '../components/Button';
 import OptionsContainer from './OptionsContainer';
@@ -16,10 +17,9 @@ class SetUpContainer extends React.Component {
     const table = document.getElementsByTagName('table')[0];
 
     // Mark player ships on the board
-    Object.values(playerShips).forEach(shipCoordinates => {
-      shipCoordinates.forEach(c => {
-        table.rows[c[0]].cells[c[1]].classList.add('placed-ship');
-      });
+    Object.keys(playerShips).forEach(shipCoordinates => {
+      let coordinatesStr = shipCoordinates.split(',');
+      table.rows[coordinatesStr[0]].cells[coordinatesStr[1]].classList.add('marker');
     });
   };
 
@@ -31,29 +31,12 @@ class SetUpContainer extends React.Component {
   };
 
   validPlacement = (coordinates, playerShips) => {
-    const flattenedPlayerShipCoordinates =
-      Object.values(playerShips).reduce((newArr, arrOfCoordinates) => {
-        arrOfCoordinates.forEach(arr => {
-          newArr.push(arr);
-        });
-        return newArr;
-      }, []);
+    const shipCoordinates = Object.keys(playerShips);
+    const intersection = coordinates.map(c => {
+      return shipCoordinates.includes(c);
+    });
 
-    const coordinatesIntersection =
-      coordinates.reduce((intersection, c) => {
-        flattenedPlayerShipCoordinates.forEach(f => {
-          if (c[0] === f[0] && c[1] === f[1]) {
-            intersection.push(c);
-          }
-        });
-        return intersection;
-      }, []);
-
-    if (flattenedPlayerShipCoordinates.length > 0 && coordinatesIntersection.length > 0) {
-      return false;
-    };
-
-    return true;
+    return !intersection.includes(true);
   };
 
   buttonClickHandler = () => {
@@ -81,18 +64,20 @@ class SetUpContainer extends React.Component {
     if (this.validCoordinates(row, col, orientation, shipLength)) {
       if (orientation === 'horizontal') {
         for (let i = col; i <= (col + shipLength - 1); i++) {
-          coordinates.push([row, i]);
+          coordinates.push(`${row},${i}`);
         };
       };
 
       if (orientation === 'vertical') {
         for (let i = row; i <= (row + shipLength - 1); i++) {
-          coordinates.push([i, col]);
-        }
+          coordinates.push(`${i},${col}`);
+        };
       };
 
       if (this.validPlacement(coordinates, playerShips)) {
-        setShip(player, shipSelected, coordinates);
+        coordinates.forEach(c => {
+          setShip(player, shipSelected, c);
+        });
       };
     }
   };
@@ -137,7 +122,7 @@ class SetUpContainer extends React.Component {
           clickHandler={this.clickHandler}
           mouseOverHandler={this.mouseOverHandler}
         />
-        {Object.keys(playerShips).length === 5 ? <Button clickHandler={this.buttonClickHandler} /> : null}
+      {Object.keys(playerShips).length === 17 ? <Button clickHandler={this.buttonClickHandler} /> : null}
       </div>
     )
   }

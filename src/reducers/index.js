@@ -38,7 +38,7 @@ const boardReducer = (state = {
 const playerShips = (state, action) => {
   switch (action.type) {
     case 'SET_SHIP':
-      return {...state, [action.payload.shipName]: action.payload.coordinates};
+      return {...state, [action.payload.coordinates]: action.payload.shipName};
     default:
       return state;
   }
