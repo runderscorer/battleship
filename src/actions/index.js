@@ -1,6 +1,7 @@
 import { push } from 'react-router-redux';
 import {
   ATTACK_SHIP,
+  END_GAME,
   PLAYER_ONE_ATTACK,
   PLAYER_TWO_ATTACK,
   SELECT_SHIP,
@@ -19,6 +20,16 @@ export function attackShip(enemy, enemyShip) {
       enemy,
       enemyShip
     }
+  };
+};
+
+export function endGame(player) {
+  return (dispatch) => {
+    dispatch({
+      type: END_GAME,
+      payload: player
+    });
+    dispatch(push('/'));
   };
 };
 

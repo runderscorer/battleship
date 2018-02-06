@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
   attackShip,
+  endGame,
   playerOneAttack,
   playerTwoAttack,
   toggleTurn,
@@ -18,7 +19,25 @@ class GameContainer extends React.Component {
   }
 
   componentDidUpdate() {
-    this.displayHitsAndMisses(this.props.enemyShips, this.props.attacks);
+    const {
+      attacks,
+      endGame,
+      enemyShips,
+      enemyShipsHealth,
+      playerName,
+    } = this.props;
+
+    this.displayHitsAndMisses(enemyShips, attacks);
+
+    const hitsLeft =
+      Object.values(enemyShipsHealth).reduce((sum, health) => {
+        sum += health;
+        return sum;
+      }, 0);
+
+    if (hitsLeft === 0) {
+      endGame(playerName);
+    };
   };
 
   displayHitsAndMisses = (enemyShips, attacks) => {
@@ -61,7 +80,6 @@ class GameContainer extends React.Component {
     const attackCoordinates = `${row},${col}`;
     const playerAttackAction = playerTurn === 'playerOne' ? playerOneAttack : playerTwoAttack;
     const enemy = togglePlayer(playerTurn);
-    console.log('enemy: ', enemy);
 
     playerAttackAction(attackCoordinates);
 
@@ -118,6 +136,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     attackShip,
+    endGame,
     playerOneAttack,
     playerTwoAttack,
     toggleTurn,

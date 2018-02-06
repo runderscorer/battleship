@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import { SHIP_LENGTHS } from '../constants';
 import {
   ATTACK_SHIP,
+  END_GAME,
   PLAYER_ONE_ATTACK,
   PLAYER_TWO_ATTACK,
   SET_IS_PLAYING,
@@ -57,6 +58,7 @@ const setShipsCoordinates = (state, action) => {
 };
 
 const gameReducer = (state = {
+  gameOver: false,
   isPlaying: true,
   message: '',
   playerOneName: '',
@@ -66,6 +68,12 @@ const gameReducer = (state = {
   playerTurn: 'playerOne',
 }, action) => {
   switch (action.type) {
+    case END_GAME:
+      return {
+        ...state,
+        gameOver: true,
+        winner: action.payload
+      };
     case PLAYER_ONE_ATTACK:
       return {
         ...state,
