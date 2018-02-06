@@ -13,14 +13,20 @@ import ShipsContainer from './ShipsContainer';
 class SetUpContainer extends React.Component {
   componentDidUpdate() {
     const { playerShips } = this.props;
+
+    this.displayPlayerShips(playerShips);
+  };
+
+  displayPlayerShips = (playerShips) => {
     const table = document.getElementsByTagName('table')[0];
 
-    // Mark player ships on the board
     Object.keys(playerShips).forEach(shipCoordinates => {
       let coordinatesArr = shipCoordinates.split(',');
       table.rows[coordinatesArr[0]].cells[coordinatesArr[1]].classList.add('marker');
     });
-  };
+
+    console.log('playerShip coordinates: ', Object.keys(playerShips));
+  }
 
   validCoordinates = (row, col, orientation, shipLength) => {
     return (
@@ -61,6 +67,7 @@ class SetUpContainer extends React.Component {
     const coordinates = [];
 
     if (this.validCoordinates(row, col, orientation, shipLength)) {
+      console.log('Valid move - on board');
       if (orientation === 'horizontal') {
         for (let i = col; i <= (col + shipLength - 1); i++) {
           coordinates.push(`${row},${i}`);
@@ -77,8 +84,13 @@ class SetUpContainer extends React.Component {
         coordinates.forEach(c => {
           setShip(player, shipSelected, c);
         });
+        console.log('Valid placement');
+      } else {
+        console.log('Invalid placement');
       };
-    }
+    } else {
+      console.log('Invalid move - off board');
+    };
   };
 
   mouseOverHandler = (e) => {

@@ -28,6 +28,8 @@ class GameContainer extends React.Component {
       playerName,
     } = this.props;
 
+    console.log('enemyShips coordinates: ', Object.keys(enemyShips));
+    console.log('enemyShips health: ', enemyShipsHealth);
     this.displayHitsAndMisses(enemyShips, attacks);
 
     const hitsLeft =
