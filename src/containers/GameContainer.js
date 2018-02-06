@@ -7,11 +7,33 @@ import {
   toggleTurn,
   updateMessage,
 } from '../actions';
-import { togglePlayer } from '../helpers';
+import {
+  matchingCoordinates,
+  togglePlayer
+} from '../helpers';
 import Board from '../components/Board';
 import Button from '../components/Button';
 
 class GameContainer extends React.Component {
+  componentDidMount() {
+    this.updateBoard(this.props.enemyShips, this.props.attacks);
+  }
+
+  componentDidUpdate() {
+    this.updateBoard(this.props.enemyShips, this.props.attacks);
+  };
+
+  updateBoard = (enemyShips, attacks) => {
+    const table = document.getElementsByTagName('table')[0];
+
+    attacks.forEach(attack => {
+      let attackCoordinates = attack.split(',');
+      let cell = table.rows[attackCoordinates[0]].cells[attackCoordinates[1]];
+
+      enemyShips[attack] ? cell.classList.add('hit') : cell.classList.add('marker');
+    });
+  };
+
   buttonClickHandler = (e) => {
     const {
       playerTurn,
@@ -31,17 +53,15 @@ class GameContainer extends React.Component {
     } = this.props;
     const row = e.target.parentNode.rowIndex;
     const col = e.target.cellIndex;
-    const playerAttack = playerTurn === 'playerOne' ? playerOneAttack : playerTwoAttack;
+    const attackCoordinates = `${row},${col}`;
+    const playerAttackAction = playerTurn === 'playerOne' ? playerOneAttack : playerTwoAttack;
+    const message =
+      Object.keys(enemyShips).includes(attackCoordinates) ?
+        `You hit their ${enemyShips[attackCoordinates]}!` :
+        `You missed.`
 
-    const attackedShip =
-      Object.keys(enemyShips).find(ship => {
-        enemyShips[ship].find(coordinates => {
-          return row === coordinates[0] && col === coordinates[1];
-        });
-      });
-
-    playerAttack([row, col]);
-    updateMessage(attackedShip ? `You hit their ${attackedShip}!` : 'You missed.');
+    updateMessage(message);
+    playerAttackAction(attackCoordinates);
   };
 
   mouseOverHandler = (e) => {
@@ -73,6 +93,7 @@ const mapStateToProps = (state) => {
   return {
     board: state.board.board,
     enemyShips: state.board[enemy],
+    attacks: state.game[playerTurn],
     playerTurn: state.game.playerTurn,
   };
 };

@@ -15,6 +15,10 @@ tr {
   background-color: lightgreen;
 }
 
-.placed-ship {
+.hit {
+  background-color: red;
+}
+
+.marker {
   background-color: lightgray;
 }
