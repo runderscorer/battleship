@@ -1,7 +1,10 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setPlayerNames } from '../actions';
+import {
+  setPlayerNames,
+  startNewGame,
+} from '../actions';
 import GameOver from '../components/GameOver';
 import Welcome from '../components/Welcome';
 
@@ -10,10 +13,16 @@ class WelcomeContainer extends React.Component {
     const {
       gameOver,
       setPlayerNames,
+      startNewGame,
       winner,
     } = this.props;
 
-    return gameOver ? <GameOver winner={winner} /> : <Welcome submitHandler={setPlayerNames} />;
+    return gameOver ?
+      <GameOver
+        clickHandler={startNewGame}
+        winner={winner}
+      /> :
+      <Welcome submitHandler={setPlayerNames} />;
   }
 };
 
@@ -27,6 +36,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     setPlayerNames,
+    startNewGame,
   }, dispatch);
 };
 

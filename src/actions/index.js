@@ -9,6 +9,7 @@ import {
   SET_ORIENTATION,
   SET_PLAYER_NAMES,
   SET_SHIP,
+  START_NEW_GAME,
   TOGGLE_TURN,
   UPDATE_MESSAGE,
 } from '../actionTypes';
@@ -100,6 +101,10 @@ export function setShip(player, shipName, coordinates)  {
 
 export function setOrientation(orientation) {
   return { type: SET_ORIENTATION, payload: orientation };
+};
+
+export function startNewGame() {
+  return { type: START_NEW_GAME };
 };
 
 export function toggleTurn(player) {

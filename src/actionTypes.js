@@ -7,5 +7,6 @@ export const SET_IS_PLAYING = 'SET_IS_PLAYING';
 export const SET_ORIENTATION = 'SET_ORIENTATION';
 export const SET_PLAYER_NAMES = 'SET_PLAYER_NAMES';
 export const SET_SHIP = 'SET_SHIP';
+export const START_NEW_GAME = 'START_NEW_GAME';
 export const TOGGLE_TURN = 'TOGGLE_TURN';
 export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';

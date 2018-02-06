@@ -11,6 +11,7 @@ import {
   SET_ORIENTATION,
   SET_PLAYER_NAMES,
   SET_SHIP,
+  START_NEW_GAME,
   TOGGLE_TURN,
   UPDATE_MESSAGE,
 } from '../actionTypes';
@@ -101,6 +102,10 @@ const gameReducer = (state = {
         playerOneName: action.payload.playerOne,
         playerTwoName: action.payload.playerTwo
       };
+    case START_NEW_GAME:
+      return {
+        ...state,
+      }
     case TOGGLE_TURN:
       return {
         ...state,
@@ -155,9 +160,19 @@ const updateEnemyShip = (state, action) => {
   }
 }
 
-export default combineReducers({
+const appReducer = combineReducers({
   board: boardReducer,
   game: gameReducer,
   ships: shipsReducer,
   router: routerReducer,
 });
+
+// Passing undefined to the appReducer resets the
+// state for each reducer and resets the game.
+export const rootReducer = (state, action) => {
+  if (action.type === START_NEW_GAME) {
+    state = undefined;
+  };
+
+  return appReducer(state, action);
+}
