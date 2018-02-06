@@ -12,6 +12,7 @@ import {
 import { togglePlayer } from '../helpers';
 import Board from '../components/Board';
 import Button from '../components/Button';
+import Message from '../components/Message';
 
 class GameContainer extends React.Component {
   componentDidMount() {
@@ -101,12 +102,14 @@ class GameContainer extends React.Component {
   render() {
     const {
       board,
+      message,
       playerName,
     } = this.props;
 
     return (
       <div>
         <h1>{playerName}</h1>
+        <Message message={message} />
         <Board
           board={board}
           clickHandler={this.clickHandler}

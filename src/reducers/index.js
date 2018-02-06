@@ -109,7 +109,8 @@ const gameReducer = (state = {
     case TOGGLE_TURN:
       return {
         ...state,
-        playerTurn: action.payload
+        message: '',
+        playerTurn: action.payload,
       };
     case UPDATE_MESSAGE:
       return {
