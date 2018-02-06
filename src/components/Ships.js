@@ -25,7 +25,7 @@ export default class Ships extends React.Component {
         {this.ships.map(ship => {
           return (
             <button
-              disabled={Object.keys(playerShips).includes(ship.name)}
+              disabled={Object.values(playerShips).includes(ship.name)}
               key={ship.name}
               onClick={this.handleClick}
               value={ship.name}
