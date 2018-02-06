@@ -29,8 +29,8 @@ export default class Welcome extends React.Component {
     const { playerOneName, playerTwoName } = this.props;
 
     return (
-      <div>
-        <h1>Welcome</h1>
+      <div className='welcome'>
+        <h1>Battleship</h1>
         <form onSubmit={this.handleSubmit}>
           <label>Player One:</label>
           <input onChange={this.handleOneChange} value={playerOneName} />

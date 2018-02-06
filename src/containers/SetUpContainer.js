@@ -82,7 +82,10 @@ class SetUpContainer extends React.Component {
   };
 
   mouseOverHandler = (e) => {
-    const { orientation, shipLength } = this.props;
+    const {
+      orientation,
+      shipLength
+    } = this.props;
     const table = document.getElementsByTagName('table')[0];
     const row = e.target.parentNode.rowIndex;
     const col = e.target.cellIndex;
@@ -109,13 +112,15 @@ class SetUpContainer extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <div className='main'>
         <h1>{playerName}</h1>
         <ShipsContainer
           player={player}
           playerShips={playerShips}
         />
         <OptionsContainer />
+
+        <p>3. Place your ship on the board.</p>
         <Board
           board={board}
           clickHandler={this.clickHandler}

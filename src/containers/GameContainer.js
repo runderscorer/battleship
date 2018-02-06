@@ -107,7 +107,7 @@ class GameContainer extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <div className='main'>
         <h1>{playerName}</h1>
         <Message message={message} />
         <Board

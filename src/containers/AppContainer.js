@@ -8,7 +8,7 @@ import WelcomeContainer from '../containers/WelcomeContainer';
 class AppContainer extends React.Component {
   render() {
     return (
-      <div>
+      <div className='app'>
         <Route exact path='/' component={WelcomeContainer} />
         <Route exact path='/player-one' component={SetUpContainer} />
         <Route exact path='/player-two' component={SetUpContainer} />

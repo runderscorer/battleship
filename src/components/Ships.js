@@ -22,6 +22,7 @@ export default class Ships extends React.Component {
 
     return (
       <div>
+        <p>1. Select your ship.</p>
         {this.ships.map(ship => {
           return (
             <button

@@ -1,5 +1,121 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  background: white;
+  border: solid 3px black;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 25px;
+  margin-right: 5px;
+  text-transform: uppercase;
+}
+
+button:disabled {
+  background: #cce5cc;
+  border: solid 3px #99cc99;
+  transition: .5s;
+}
+
+div {
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  line-height: 40px;
+  font-size: 20px;
+  border-bottom: solid 3px black;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  border: solid 1px black;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+tr {
+  line-height: 40px;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.game-over {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20%;
+}
+
+.main {
+  width: 70%;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.welcome button {
+  background: white;
+  border: solid 3px black;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 40px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.welcome h1 {
+  margin-bottom: 100px;
+}
+
+.welcome input {
+  margin-bottom: 40px;
+}
+
+.highlight {
+  background-color: #cce5cc;
+}
+
+.hit {
+  background-color: #ff4c4c;
+  transition: .5s;
+}
+
+.marker {
+  background-color: #ededed;
+  transition: .5s;
 }

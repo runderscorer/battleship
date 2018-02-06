@@ -2,7 +2,9 @@ import React from 'react';
 
 const Message = (props) => {
   return (
-    <p>{props.message}</p>
+    props.message ?
+      <p>{props.message}</p> :
+      <p>Select your coordinates.</p>
   );
 };
 
