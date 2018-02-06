@@ -46,11 +46,15 @@ class GameContainer extends React.Component {
   clickHandler = (e) => {
     const {
       enemyShips,
+      isPlaying,
       playerTurn,
       playerOneAttack,
       playerTwoAttack,
       updateMessage,
     } = this.props;
+
+    if (!isPlaying) { return };
+    
     const row = e.target.parentNode.rowIndex;
     const col = e.target.cellIndex;
     const attackCoordinates = `${row},${col}`;
@@ -91,9 +95,10 @@ const mapStateToProps = (state) => {
   const enemy = togglePlayer(playerTurn);
 
   return {
+    attacks: state.game[playerTurn],
     board: state.board.board,
     enemyShips: state.board[enemy],
-    attacks: state.game[playerTurn],
+    isPlaying: state.game.isPlaying,
     playerTurn: state.game.playerTurn,
   };
 };

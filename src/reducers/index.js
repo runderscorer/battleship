@@ -4,6 +4,7 @@ import { SHIP_LENGTHS } from '../constants';
 import {
   PLAYER_ONE_ATTACK,
   PLAYER_TWO_ATTACK,
+  SET_IS_PLAYING,
   SELECT_SHIP,
   SET_ORIENTATION,
   SET_PLAYER_NAMES,
@@ -55,7 +56,7 @@ const playerShips = (state, action) => {
 };
 
 const gameReducer = (state = {
-  activeGame: false,
+  isPlaying: true,
   message: '',
   playerOneName: '',
   playerOne: [],
@@ -79,6 +80,11 @@ const gameReducer = (state = {
           ...state.playerTwo,
           action.payload
         ]
+      };
+    case SET_IS_PLAYING:
+      return {
+        ...state,
+        isPlaying: action.payload
       };
     case SET_PLAYER_NAMES:
       return {

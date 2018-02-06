@@ -3,6 +3,7 @@ import {
   PLAYER_ONE_ATTACK,
   PLAYER_TWO_ATTACK,
   SELECT_SHIP,
+  SET_IS_PLAYING,
   SET_ORIENTATION,
   SET_PLAYER_NAMES,
   SET_SHIP,
@@ -10,12 +11,28 @@ import {
   UPDATE_MESSAGE,
 } from '../actionTypes';
 
+export function setIsPlaying(isPlaying) {
+  return { type: SET_IS_PLAYING, payload: isPlaying };
+};
+
 export function playerOneAttack(coordinates) {
-  return { type: PLAYER_ONE_ATTACK, payload: coordinates };
+  return (dispatch) => {
+    dispatch({
+      type: PLAYER_ONE_ATTACK,
+      payload: coordinates
+    });
+    dispatch(setIsPlaying(false));
+  };
 };
 
 export function playerTwoAttack(coordinates) {
-  return { type: PLAYER_TWO_ATTACK, payload: coordinates };
+  return (dispatch) => {
+    dispatch({
+      type: PLAYER_TWO_ATTACK,
+      payload: coordinates
+    });
+    dispatch(setIsPlaying(false));
+  };
 };
 
 export function navigateNext(pathname) {
@@ -70,6 +87,7 @@ export function toggleTurn(player) {
       type: TOGGLE_TURN,
       payload: player
     });
+    dispatch(setIsPlaying(true));
     dispatch(push(pathname));
   };
 };
