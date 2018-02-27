@@ -102,15 +102,17 @@ class SetUpContainer extends React.Component {
     const row = e.target.parentNode.rowIndex;
     const col = e.target.cellIndex;
 
-    if (orientation === 'horizontal' && (col + shipLength - 1) <= 9) {
-      for (let i = col; i <= (col + shipLength - 1); i++) {
-        table.rows[row].cells[i].classList.toggle('highlight')
+    if (this.validCoordinates(row, col, orientation, shipLength)) {
+      if (orientation === 'horizontal') {
+        for (let i = col; i <= (col + shipLength - 1); i++) {
+          table.rows[row].cells[i].classList.toggle('highlight')
+        }
       }
-    };
 
-    if (orientation === 'vertical' && (row + shipLength - 1) <= 9) {
-      for (let i = row; i <= (row + shipLength - 1); i++) {
-        table.rows[i].cells[col].classList.toggle('highlight')
+      if (orientation === 'vertical') {
+        for (let i = row; i <= (row + shipLength - 1); i++) {
+          table.rows[i].cells[col].classList.toggle('highlight')
+        }
       }
     }
   };
@@ -118,7 +120,6 @@ class SetUpContainer extends React.Component {
   render() {
     const {
       board,
-      player,
       playerName,
       playerShips,
     } = this.props;
@@ -126,10 +127,7 @@ class SetUpContainer extends React.Component {
     return (
       <div className='main'>
         <h1>{playerName}</h1>
-        <ShipsContainer
-          player={player}
-          playerShips={playerShips}
-        />
+        <ShipsContainer />
         <OptionsContainer />
 
         <p>3. Place your ship on the board.</p>
@@ -146,7 +144,7 @@ class SetUpContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   const pathname = state.router.location.pathname;
-  const player = pathname.replace('/', '').replace(/(\-\w)/g, (c) => c[1].toUpperCase());
+  const player = pathname.replace('/', '').replace(/(-\w)/g, (c) => c[1].toUpperCase());
 
   return {
     board: state.board.board,

@@ -14,7 +14,7 @@ class OptionsContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    setOrientation
+    setOrientation,
   }, dispatch)
 }
 

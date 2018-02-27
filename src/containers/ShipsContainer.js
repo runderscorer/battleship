@@ -8,7 +8,7 @@ class ShipsContainer extends React.Component {
   render() {
     const {
       playerShips,
-      selectShip, 
+      selectShip,
     } = this.props;
 
     return (
@@ -20,10 +20,19 @@ class ShipsContainer extends React.Component {
   }
 };
 
+const mapStateToProps = (state) => {
+  const pathname = state.router.location.pathname;
+  const player = pathname.replace('/', '').replace(/(-\w)/g, (c) => c[1].toUpperCase());
+
+  return {
+    playerShips: state.board[player],
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     selectShip,
   }, dispatch)
 };
 
-export default connect(null, mapDispatchToProps)(ShipsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ShipsContainer);
