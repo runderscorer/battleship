@@ -52,10 +52,6 @@ export const gameReducer = (state = {
         playerOneName: action.payload.playerOne,
         playerTwoName: action.payload.playerTwo
       };
-    case START_NEW_GAME:
-      return {
-        ...state,
-      }
     case TOGGLE_TURN:
       return {
         ...state,
